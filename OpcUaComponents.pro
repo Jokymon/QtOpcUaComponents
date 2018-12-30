@@ -3,6 +3,9 @@ include(open62541.pri)
 QT       += core gui widgets uiplugin
 
 TARGET = OpcUaComponents
+CONFIG(debug, debug|release) {
+    win32: TARGET = $$join(TARGET,,,d)
+}
 TEMPLATE = lib
 CONFIG += plugin
 

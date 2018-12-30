@@ -104,7 +104,11 @@ a few manual steps (Any help to reduce these manual steps are greatly welcomed
   following line to your projects `.pro` File:
 
 ```
-LIBS += -L$$[QT_INSTALL_PLUGINS]/designer -lOpcUaComponents
+OPCUACOMPONENTSLIBRARY = OpcUaComponents
+LIBS += CONFIG(debug, debug|release) {
+    win32: OPCUACOMPONENTSLIBRARY = $$join(OPCUACOMPONENTSLIBRARY,,,d)
+}
+-L$$[QT_INSTALL_PLUGINS]/designer -lOpcUaComponents
 ```
 
 * The monitored item needs to be hooked up to the connection. Assuming you
