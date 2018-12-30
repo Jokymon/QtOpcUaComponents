@@ -1,0 +1,9 @@
+{
+    "Name": "OpcUaComponents",
+    "Version": "0.1.0",
+    "Copyright": "(c) Silvan Wegmann",
+    "License": [
+        "MIT"
+    ],
+    "Keys" : [ ]
+}
