@@ -32,3 +32,6 @@
 
 # Editor artifacts
 *.swp
+
+# Build directories
+build_*/
