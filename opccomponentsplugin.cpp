@@ -2,14 +2,14 @@
 #include "opcuaconnectionplugin.h"
 #include "opcuamonitoreditemplugin.h"
 
-MyCustomWidgets::MyCustomWidgets(QObject *parent) :
+OpcUaComponents::OpcUaComponents(QObject *parent) :
     QObject(parent)
 {
     widgets.append(new OpcUaConnectionPlugin(this));
     widgets.append(new OpcUaMonitoredItemPlugin(this));
 }
 
-QList<QDesignerCustomWidgetInterface *> MyCustomWidgets::customWidgets() const
+QList<QDesignerCustomWidgetInterface *> OpcUaComponents::customWidgets() const
 {
     return widgets;
 }

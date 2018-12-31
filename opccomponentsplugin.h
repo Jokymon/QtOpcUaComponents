@@ -3,14 +3,14 @@
 
 #include <QtUiPlugin/QDesignerCustomWidgetCollectionInterface>
 
-class MyCustomWidgets: public QObject, public QDesignerCustomWidgetCollectionInterface
+class OpcUaComponents: public QObject, public QDesignerCustomWidgetCollectionInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QDesignerCustomWidgetCollectionInterface" FILE "OpcUaComponents.json")
     Q_INTERFACES(QDesignerCustomWidgetCollectionInterface)
 
 public:
-    MyCustomWidgets(QObject *parent = nullptr);
+    OpcUaComponents(QObject *parent = nullptr);
 
     QList<QDesignerCustomWidgetInterface*> customWidgets() const override;
 
