@@ -4,6 +4,7 @@
 #include <QVariant>
 #include <QWidget>
 #include <QtUiPlugin/QDesignerExportWidget>
+#include <variant>
 
 class OpcUaConnection;
 
@@ -40,7 +41,9 @@ private:
 
 private:
     OpcUaConnection *_opcConnection;
-    QString _nodeId;
+    QString _nodeIdString;
+    int _namespaceIndex;
+    std::variant<int, QString> _nodeId;
     QVariant _value;
 };
 

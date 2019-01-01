@@ -8,6 +8,7 @@ CONFIG(debug, debug|release) {
 }
 TEMPLATE = lib
 CONFIG += plugin
+CONFIG += c++17
 
 DESTDIR = $$[QT_INSTALL_PLUGINS]/designer
 
