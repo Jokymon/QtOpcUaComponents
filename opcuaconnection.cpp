@@ -100,19 +100,15 @@ void OpcUaConnection::disconnect()
 
 void OpcUaConnection::paintEvent(QPaintEvent *)
 {
-    QPoint dummyOffset(0, 0);
-    if (!redirected(&dummyOffset))
+    if (!shownInDesigner_)
         return;
 
-    if (shownInDesigner_)
-    {
-        QColor itemColor(255, 0, 0);
+    QColor itemColor(255, 0, 0);
 
-        QPainter painter(this);
-        painter.setPen(Qt::NoPen);
-        painter.setBrush(itemColor);
-        painter.drawRect(rect());
-    }
+    QPainter painter(this);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(itemColor);
+    painter.drawRect(rect());
 }
 
 void OpcUaConnection::opcMessagePump()

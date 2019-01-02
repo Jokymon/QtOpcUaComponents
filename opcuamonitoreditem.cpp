@@ -20,6 +20,7 @@ typedef void (*dataChangeNotificationCallbackType)(UA_Client *client, UA_UInt32 
 
 OpcUaMonitoredItem::OpcUaMonitoredItem(QWidget *parent) :
     QWidget(parent),
+    shownInDesigner_(false),
     opcConnection_(nullptr),
     nodeIdString_(),
     namespaceIndex_(-1)
@@ -110,10 +111,15 @@ void OpcUaMonitoredItem::unsubscribe()
 
 }
 
+void OpcUaMonitoredItem::setShownInDesigner(bool inDesigner)
+{
+    shownInDesigner_ = inDesigner;
+    repaint();
+}
+
 void OpcUaMonitoredItem::paintEvent(QPaintEvent *)
 {
-    QPoint dummyOffset(0, 0);
-    if (!redirected(&dummyOffset))
+    if (!shownInDesigner_)
         return;
 
     QPainter painter(this);

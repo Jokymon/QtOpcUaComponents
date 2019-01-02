@@ -64,7 +64,9 @@ QString OpcUaMonitoredItemPlugin::whatsThis() const
 
 QWidget *OpcUaMonitoredItemPlugin::createWidget(QWidget *parent)
 {
-    return new OpcUaMonitoredItem(parent);
+    auto *instance = new OpcUaMonitoredItem(parent);
+    instance->setShownInDesigner(true);
+    return instance;
 }
 
 void OpcUaMonitoredItemPlugin::initialize(QDesignerFormEditorInterface *core)

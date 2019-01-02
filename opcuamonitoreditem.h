@@ -31,6 +31,8 @@ public slots:
     void subscribe();
     void unsubscribe();
 
+    void setShownInDesigner(bool inDesigner);
+
 protected:
     void paintEvent(QPaintEvent *event) override;
 
@@ -40,6 +42,7 @@ private:
     void dataChangeCallback(uint32_t monitoringId, void *value);
 
 private:
+    bool shownInDesigner_;
     OpcUaConnection *opcConnection_;
     QString nodeIdString_;
     int namespaceIndex_;
