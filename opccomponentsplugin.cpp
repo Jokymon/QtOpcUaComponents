@@ -5,11 +5,11 @@
 OpcUaComponents::OpcUaComponents(QObject *parent) :
     QObject(parent)
 {
-    widgets.append(new OpcUaConnectionPlugin(this));
-    widgets.append(new OpcUaMonitoredItemPlugin(this));
+    widgets_.append(new OpcUaConnectionPlugin(this));
+    widgets_.append(new OpcUaMonitoredItemPlugin(this));
 }
 
 QList<QDesignerCustomWidgetInterface *> OpcUaComponents::customWidgets() const
 {
-    return widgets;
+    return widgets_;
 }

@@ -13,7 +13,7 @@ bool OpcUaMonitoredItemPlugin::isContainer() const
 
 bool OpcUaMonitoredItemPlugin::isInitialized() const
 {
-    return initialized;
+    return initialized_;
 }
 
 QIcon OpcUaMonitoredItemPlugin::icon() const
@@ -69,8 +69,8 @@ QWidget *OpcUaMonitoredItemPlugin::createWidget(QWidget *parent)
 
 void OpcUaMonitoredItemPlugin::initialize(QDesignerFormEditorInterface *core)
 {
-    if (initialized)
+    if (initialized_)
         return;
 
-    initialized = true;
+    initialized_ = true;
 }

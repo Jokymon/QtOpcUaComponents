@@ -50,13 +50,13 @@ private:
     void deleteSubscriptionCallback(uint32_t subscriptionId, void *subscriptionContext);
 
 private:
-    QTimer _opcClientTimer;
-    bool _shownInDesigner;
-    QUrl _serverUrl;
-    ConnectionState _state;
-    unsigned int _subscriptionId;
+    QTimer opcClientTimer_;
+    bool shownInDesigner_;
+    QUrl serverUrl_;
+    ConnectionState state_;
+    unsigned int subscriptionId_;
 
-    UA_Client *_client;
+    UA_Client *client_;
 };
 
 #endif // OPCUACONNECTION_H

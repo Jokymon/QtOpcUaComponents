@@ -24,7 +24,7 @@ public:
     void initialize(QDesignerFormEditorInterface *core) override;
 
 private:
-    bool initialized = false;
+    bool initialized_ = false;
 };
 
 #endif // OPCUAMONITOREDITEMPLUGIN_H

@@ -15,7 +15,7 @@ public:
     QList<QDesignerCustomWidgetInterface*> customWidgets() const override;
 
 private:
-    QList<QDesignerCustomWidgetInterface*> widgets;
+    QList<QDesignerCustomWidgetInterface*> widgets_;
 };
 
 #endif // OPCCOMPONENTSPLUGIN_H

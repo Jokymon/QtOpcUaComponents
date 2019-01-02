@@ -40,11 +40,11 @@ private:
     void dataChangeCallback(uint32_t monitoringId, void *value);
 
 private:
-    OpcUaConnection *_opcConnection;
-    QString _nodeIdString;
-    int _namespaceIndex;
-    std::variant<int, QString> _nodeId;
-    QVariant _value;
+    OpcUaConnection *opcConnection_;
+    QString nodeIdString_;
+    int namespaceIndex_;
+    std::variant<int, QString> nodeId_;
+    QVariant value_;
 };
 
 

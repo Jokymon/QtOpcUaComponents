@@ -14,7 +14,7 @@ bool OpcUaConnectionPlugin::isContainer() const
 
 bool OpcUaConnectionPlugin::isInitialized() const
 {
-    return initialized;
+    return initialized_;
 }
 
 QIcon OpcUaConnectionPlugin::icon() const
@@ -72,8 +72,8 @@ QWidget *OpcUaConnectionPlugin::createWidget(QWidget *parent)
 
 void OpcUaConnectionPlugin::initialize(QDesignerFormEditorInterface *)
 {
-    if (initialized)
+    if (initialized_)
         return;
 
-    initialized = true;
+    initialized_ = true;
 }

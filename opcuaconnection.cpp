@@ -13,66 +13,66 @@ typedef void (*deleteSubscriptionCallbackType)(UA_Client *client, UA_UInt32 subs
 
 OpcUaConnection::OpcUaConnection(QWidget *parent) :
     QWidget(parent),
-    _opcClientTimer(),
-    _shownInDesigner(false),
-    _serverUrl(),
-    _state(ConnectionState::UnconnectedState),
-    _subscriptionId(std::numeric_limits<unsigned int>::max()),
-    _client(nullptr)
+    opcClientTimer_(),
+    shownInDesigner_(false),
+    serverUrl_(),
+    state_(ConnectionState::UnconnectedState),
+    subscriptionId_(std::numeric_limits<unsigned int>::max()),
+    client_(nullptr)
 {
     UA_ClientConfig config = UA_ClientConfig_default;
     config.stateCallback = reinterpret_cast<stateCallbackType>(OpcUaConnection::s_stateCallback);
     config.subscriptionInactivityCallback = reinterpret_cast<subscriptionInactivityCallbackType>(OpcUaConnection::s_subscriptionInactivityCallback);
     config.clientContext = this;
-    _client = UA_Client_new(config);
+    client_ = UA_Client_new(config);
 
-    _opcClientTimer.setInterval(100);
-    _opcClientTimer.setSingleShot(false);
-    QObject::connect(&_opcClientTimer, &QTimer::timeout,
+    opcClientTimer_.setInterval(100);
+    opcClientTimer_.setSingleShot(false);
+    QObject::connect(&opcClientTimer_, &QTimer::timeout,
                      this, &OpcUaConnection::opcMessagePump);
 }
 
 OpcUaConnection::~OpcUaConnection()
 {
-    _opcClientTimer.stop();
-    UA_Client_delete(_client);
+    opcClientTimer_.stop();
+    UA_Client_delete(client_);
 }
 
 QUrl OpcUaConnection::serverUrl() const
 {
-    return _serverUrl;
+    return serverUrl_;
 }
 
 void OpcUaConnection::setServerUrl(QUrl serverUrl)
 {
-    _serverUrl = serverUrl;
+    serverUrl_ = serverUrl;
 }
 
 OpcUaConnection::ConnectionState OpcUaConnection::state() const
 {
-    return _state;
+    return state_;
 }
 
 void OpcUaConnection::setShownInDesigner(bool inDesigner)
 {
-    _shownInDesigner = inDesigner;
+    shownInDesigner_ = inDesigner;
     repaint();
 }
 
 void OpcUaConnection::connect()
 {
-    UA_StatusCode retval = UA_Client_connect_username(_client, _serverUrl.toString().toLatin1(), "user1", "password");
+    UA_StatusCode retval = UA_Client_connect_username(client_, serverUrl_.toString().toLatin1(), "user1", "password");
     if (retval == UA_STATUSCODE_GOOD) {
-        _state = ConnectionState::ConnectedState;
-        _opcClientTimer.start();
+        state_ = ConnectionState::ConnectedState;
+        opcClientTimer_.start();
 
         UA_CreateSubscriptionRequest request = UA_CreateSubscriptionRequest_default();
-        UA_CreateSubscriptionResponse response = UA_Client_Subscriptions_create(_client, request,
+        UA_CreateSubscriptionResponse response = UA_Client_Subscriptions_create(client_, request,
                                                                                 nullptr, nullptr, reinterpret_cast<deleteSubscriptionCallbackType>(OpcUaConnection::s_deleteSubscriptionCallback));
 
         if(response.responseHeader.serviceResult == UA_STATUSCODE_GOOD) {
             qDebug() << "Create subscription succeeded, id" << response.subscriptionId;
-            _subscriptionId = response.subscriptionId;
+            subscriptionId_ = response.subscriptionId;
         }
         else
             return;
@@ -82,18 +82,18 @@ void OpcUaConnection::connect()
     }
     else {
         qDebug() << "Couldn't connect client; error code=" << retval;
-        UA_Client_delete(_client);
-        _client = nullptr;
+        UA_Client_delete(client_);
+        client_ = nullptr;
         // TODO: capture status code
     }
 }
 
 void OpcUaConnection::disconnect()
 {
-    if (_client) {
-        _opcClientTimer.stop();
-        UA_Client_disconnect(_client);
-        _state = ConnectionState::UnconnectedState;
+    if (client_) {
+        opcClientTimer_.stop();
+        UA_Client_disconnect(client_);
+        state_ = ConnectionState::UnconnectedState;
         emit disconnected();
     }
 }
@@ -104,7 +104,7 @@ void OpcUaConnection::paintEvent(QPaintEvent *)
     if (!redirected(&dummyOffset))
         return;
 
-    if (_shownInDesigner)
+    if (shownInDesigner_)
     {
         QColor itemColor(255, 0, 0);
 
@@ -117,7 +117,7 @@ void OpcUaConnection::paintEvent(QPaintEvent *)
 
 void OpcUaConnection::opcMessagePump()
 {
-    UA_Client_run_iterate(_client, 0);
+    UA_Client_run_iterate(client_, 0);
 }
 
 void OpcUaConnection::stateCallback(int clientState)
